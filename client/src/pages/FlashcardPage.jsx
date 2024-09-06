@@ -78,3 +78,5 @@ const flashcardPage = () => {
 };
 
 export default SingleFlashcard;
+
+
