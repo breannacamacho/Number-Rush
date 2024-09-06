@@ -1,8 +1,8 @@
 import { Navigate, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
-import MonsterForm from "../components/MonsterForm";
-import MonsterList from "../components/MonsterList";
+import MonsterForm from "../components/OperationsForm";
+import MonsterList from "../components/LeaderboardList";
 
 import { QUERY_USER, QUERY_ME, QUERY_MONSTERS } from "../utils/queries";
 

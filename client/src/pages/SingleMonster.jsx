@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { Modal, Button } from "react-bootstrap";
 import { useState } from "react";
-import CommentList from "../components/CommentList";
-import CommentForm from "../components/CommentForm";
+import CommentList from "../components/QuestionList";
+import CommentForm from "../components/QuizForm";
 import UpdateMonsterForm from "../components/updateMonsterForm";
 import { QUERY_SINGLE_MONSTER } from "../utils/queries";
 
