@@ -14,11 +14,11 @@ const Profile = () => {
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
-  const { loading: loadingMonsters, data: monsterData } =
-    useQuery(QUERY_MONSTERS);
+  const { loading: loadingFlashcard, data: FlashcardData } =
+    useQuery(QUERY_MONSTER);
 
   const user = data?.me || data?.user || {};
-  const monsters = monsterData?.monsters || [];
+  const monsters = ProfileData?.monsters || [];
 
   // navigate to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
