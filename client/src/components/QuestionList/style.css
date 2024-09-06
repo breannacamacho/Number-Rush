@@ -1,0 +1,100 @@
+.card {
+    border: 1px solid #00BFFF; /* Electric Blue */
+    margin-bottom: 1rem;
+  }
+  
+  .flash-card {
+    margin-top: 40px;
+    font-size: 3em;
+    color: white;
+    padding: 3em 2em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    gap: 1em;
+    opacity: 0.7;
+    background-color: #FF8C00; /* Bright Orange */
+    background-image: url("../../assets/images/Image\ from\ iOS.jpg");
+    background-size: cover;
+  }
+  
+  .card .card-header {
+    padding: 0.375rem;
+    background-color: #FFD700; /* Sunset Yellow */
+    color: #B22222; /* Deep Red */
+  }
+  
+  .card .card-body {
+    padding: 0.375rem;
+    background-color: rgba(255, 140, 0, 0.3); /* Bright Orange with opacity */
+    margin-top: 0;
+    backdrop-filter: blur(10px);
+  }
+  
+  .card .card-footer {
+    border-top: 1px;
+    padding: 0.375rem;
+    background: transparent;
+  }
+  
+  .card.card-rounded {
+    border-radius: 0.3rem;
+  }
+  
+  .card.card-rounded .card-header {
+    border-radius: calc(0.18rem - 1px) calc(0.18rem - 1px) 0 0;
+  }
+  
+  .element.style {
+    backface-visibility: hidden;
+    left: 0px;
+    position: relative;
+    top: 0px;
+    transform: rotateX(0deg);
+    transform-style: preserve-3d;
+    transition: all 0.6s ease 0s;
+    width: 100%;
+    z-index: 2;
+  }
+  
+  .card-body {
+    background-color: rgba(255, 140, 0, 0.3); /* Bright Orange with opacity */
+    margin-top: 0;
+    backdrop-filter: blur(10px);
+  }
+  
+  .card-header {
+    font-size: 40px;
+    margin-bottom: 0rem;
+  }
+  
+  .options {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .options button {
+    margin: 5px 0;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #00BFFF; /* Electric Blue */
+    color: white;
+    border: none;
+  }
+  
+  .options button.selected {
+    background-color: #32CD32; /* Neon Green */
+  }
+  
+  .timer {
+    font-size: 1.2em;
+    color: #FFD700; /* Sunset Yellow */
+  }
+  
+  .score {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #FF8C00; /* Bright Orange */
+  }
+  
