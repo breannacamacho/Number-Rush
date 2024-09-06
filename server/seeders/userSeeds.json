@@ -2,51 +2,61 @@
   {
     "username": "Geralt of Rivia",
     "email": "geralt@witchersguild.dev",
-    "password": "rootroot"
+    "password": "rootroot",
+    "score": 85
   },
   {
     "username": "Yennefer of Vengerberg",
     "email": "yennefer@witchersguild.dev",
-    "password": "rootroot"
+    "password": "rootroot",
+    "score": 90
   },
   {
     "username": "Ciri of Cintra",
     "email": "ciri@witchersguild.dev",
-    "password": "rootroot"
+    "password": "rootroot",
+    "score": 95
   },
   {
     "username": "Triss Merigold",
     "email": "triss@witchersguild.dev",
-    "password": "rootroot"
+    "password": "rootroot",
+    "score": 88
   },
   {
     "username": "Dandelion",
     "email": "dandelion@witchersguild.dev",
-    "password": "rootroot"
+    "password": "rootroot",
+    "score": 77
   },
   {
     "username": "Vesemir",
     "email": "vesemir@witchersguild.dev",
-    "password": "rootroot"
+    "password": "rootroot",
+    "score": 92
   },
   {
     "username": "Zoltan Chivay",
     "email": "zoltan@witchersguild.dev",
-    "password": "rootroot"
+    "password": "rootroot",
+    "score": 83
   },
   {
     "username": "Regis",
     "email": "regis@witchersguild.dev",
-    "password": "rootroot"
+    "password": "rootroot",
+    "score": 89
   },
   {
     "username": "Emhyr var Emreis",
     "email": "emhyr@witchersguild.dev",
-    "password": "rootroot"
+    "password": "rootroot",
+    "score": 78
   },
   {
     "username": "Jaskier",
     "email": "jaskier@witchersguild.dev",
-    "password": "rootroot"
+    "password": "rootroot",
+    "score": 80
   }
 ]

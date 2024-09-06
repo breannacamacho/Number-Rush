@@ -1,50 +1,33 @@
-const typeDefs = `
+const { gql } = require('apollo-server-express');
+
+const typeDefs = gql`
   type User {
     _id: ID
     username: String
     email: String
-    password: String
+    score: Int
   }
 
-  type Monster {
+  type Question {
     _id: ID
-    monsterName: String!
-    type: String!
-    habitat: String!
-    weaknesses: [String]!
-    comments: [Comment]
+    question: String
+    answerA: String
+    answerB: String
+    answerC: String
+    answerD: String
+    correctAnswer: String
   }
 
-  type Comment {
+ type Quiz {
     _id: ID
-    commentText: String
-    commentAuthor: String
-    createdAt: String
-  }
-
-  type Auth {
-    token: ID!
-    user: User
+    questions: Question
+    title: String
   }
 
   type Query {
     users: [User]
-    user(username: String!): User
-    monsters(username: String): [Monster]
-    monster(monsterId: ID!): Monster
-    me: User
-  }
-
-  type Mutation {
-    addUser(username: String!, email: String!, password: String!): Auth
-    login(email: String!, password: String!): Auth
-    addMonster(monsterName: String!, type: String!, habitat: String!, weaknesses: [String]!): Monster
-    updateMonster(monsterId: ID!, monsterName: String, type: String, habitat: String, weaknesses: [String]): Monster
-      removeMonster(monsterId: ID!): Monster
-    addComment(monsterId: ID!, commentText: String!): Monster
-    updateComment(monsterId: ID!, commentId: ID!, commentText: String!): Monster
-    removeComment(monsterId: ID!, commentId: ID!): Monster
+    getQuestion(_id: ID!): Question
   }
 `;
 
-module.exports = typeDefs;
+module.exports = typeDefs
