@@ -42,52 +42,83 @@ const Signup = () => {
     <main className="flex-row justify-center mb-4">
       <div className="col-12 col-lg-10">
         <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
+          <h4 className="card-header bg-dark text-light p-2">Create Your Flashcard Study Account</h4>
           <div className="card-body">
             {data ? (
               <p>
                 Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
+                <Link to="/">back to the homepage.</Link> and start creating your flashcards.
               </p>
             ) : (
+              //Username 
               <form onSubmit={handleFormSubmit}>
-                <input
+                <div className="from-group">
+                  <label htmlFor="username">Username</label>
+                  <input
+                  id="username"
                   className="form-input"
-                  placeholder="Your username"
+                  placeholder="Choose a username"
                   name="username"
                   type="text"
-                  value={formState.name}
+                  value={formState.username}
                   onChange={handleChange}
+                  required
                 />
+              </div>
+            
+              <div className="form-group">
+                <label htmlFor="email">Email Address</label>
                 <input
+                  id="email"
                   className="form-input"
-                  placeholder="Your email"
+                  placeholder="Enter your email"
                   name="email"
                   type="email"
                   value={formState.email}
                   onChange={handleChange}
+                  required
                 />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
                 <input
+                  id="password"
                   className="form-input"
-                  placeholder="******"
+                  placeholder="Enter your password"
                   name="password"
                   type="password"
                   value={formState.password}
                   onChange={handleChange}
-                />
-                <button
+                  required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    id="password"
+                    className="form-input"
+                    placeholder="Enter your password"
+                    name="password"
+                    type="password"
+                    value={formState.password}
+                    onChange={handleChange}
+                    required
+                    />
+                    </div>
+                    <button
                   className="btn btn-block btn-primary"
                   style={{ cursor: 'pointer' }}
                   type="submit"
                 >
-                  Submit
+                  Sign Up
                 </button>
               </form>
             )}
 
             {error && (
               <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
+                Something went wrong: {error.message}
               </div>
             )}
           </div>
@@ -96,5 +127,6 @@ const Signup = () => {
     </main>
   );
 };
-
+                
+  
 export default Signup;
