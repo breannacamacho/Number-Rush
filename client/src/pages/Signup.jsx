@@ -42,12 +42,12 @@ const Signup = () => {
     <main className="flex-row justify-center mb-4">
       <div className="col-12 col-lg-10">
         <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Create Your Flashcard Account</h4>
+          <h4 className="card-header bg-dark text-light p-2">Create Your Account</h4>
           <div className="card-body">
             {data ? (
               <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link> and start creating your flashcards.
+                Success!{' '}
+                <Link to="/">Back to the homepage.</Link>
               </p>
             ) : (
               //Username 

@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client';
 //gti import { QUERY_USER, QUERY_ME, QUERY_SCORES } from '../utils/queries'; 
 import Auth from '../utils/auth';
 import ScoreList from '../components/LeaderboardList/Scoreboard'; // this assume's you have a component to display scores
+
 //import ProfileForm from '../components/ProfileForm'; // this assume's you have a component to update profile
 
 const Profile = () => {
