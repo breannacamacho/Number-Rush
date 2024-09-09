@@ -1,13 +1,15 @@
+import React from 'react';
 import { useQuery } from "@apollo/client";
-
-import LeaderboardList from "../components/LeaderboardList/Leaderboard";
 import OperationsForm from "../components/OperationsForm"; 
-
+import LeaderboardList from "../components/LeaderboardList/Leaderboard";  // Ensure this path is correct
 import { QUERY_DATA } from "../utils/queries"; 
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_DATA); 
+  const { loading, error, data } = useQuery(QUERY_DATA); 
   const results = data?.results || []; 
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error fetching data</div>;
 
   return (
     <main>
@@ -19,11 +21,7 @@ const Home = () => {
           <OperationsForm />
         </div>
         <div className='col-12 col-md-8 mb-3'>
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <LeaderboardList data={results} title='Leaderboard' /> 
-          )}
+          <LeaderboardList data={results} title='Leaderboard' /> 
         </div>
       </div>
     </main>
