@@ -7,7 +7,11 @@ const typeDefs = gql`
     email: String
     score: Int
   }
-
+type Auth {
+    token: ID!
+    user: User
+  }
+    
   type Question {
     _id: ID
     question: String
@@ -27,6 +31,10 @@ const typeDefs = gql`
   type Query {
     users: [User]
     getQuestion(_id: ID!): Question
+  }
+  type Mutation {
+    login(email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!): Auth
   }
 `;
 
