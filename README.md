@@ -50,7 +50,7 @@ To get a local copy up and running, make sure you have the following installed:
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/number-rush.git
+   git clone git@github.com:breannacamacho/Number-Rush.git
    ```
 2. Navigate to the project directory:
    ```bash
