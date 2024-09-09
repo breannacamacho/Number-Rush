@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 // import SingleMonster from "./pages/SingleMonster";
 import Profile from "./pages/Profile";
 import ErrorPage from "./pages/ErrorPage";
-import FlashcardPage from './pages/FlashcardPage.jsx';
+import FlashcardPage from "./pages/FlashcardPage.jsx";
 
 
 const router = createBrowserRouter([
@@ -37,10 +37,10 @@ const router = createBrowserRouter([
         path: "/me",
         element: <Profile />,
       },
-      {
-        path: "/monsters/:monsterId",
-        element: <SingleMonster />,
-      },
+      // {
+      //   path: "/monsters/:monsterId",
+      //   element: <SingleMonster />,
+      // },
     ],
   },
 ]);

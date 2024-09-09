@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import LeaderboardList from "../components/LeaderboardList/Leaderboard";
 import OperationsForm from "../components/OperationsForm"; 
 
-import { QUERY_DATA } from "../utils/queries"; 
+// import { QUERY_DATA } from "../utils/queries"; 
 
 const Home = () => {
   const { loading, data } = useQuery(QUERY_DATA); 
