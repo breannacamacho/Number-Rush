@@ -7,11 +7,12 @@ const typeDefs = gql`
     email: String
     score: Int
   }
-type Auth {
+
+  type Auth {
     token: ID!
     user: User
   }
-    
+
   type Question {
     _id: ID
     question: String
@@ -22,20 +23,30 @@ type Auth {
     correctAnswer: String
   }
 
- type Quiz {
+  type Quiz {
     _id: ID
     questions: Question
     title: String
   }
 
+  # Define a new Score type for the leaderboard
+  type Score {
+    _id: ID
+    user: User
+    score: Int
+  }
+
   type Query {
     users: [User]
     getQuestion(_id: ID!): Question
+    # New query to get leaderboard scores
+    leaderboard: [Score]
   }
+
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
   }
 `;
 
-module.exports = typeDefs
+module.exports = typeDefs;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useScore } from '../../context/ScoreContext';
+import { useScore } from '../context/ScoreContext';
 
 const Leaderboard = () => {
     const { leaderboard } = useScore();
