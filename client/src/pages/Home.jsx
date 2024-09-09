@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 
-import LeaderboardList from "../components/LeaderboardList";
+import LeaderboardList from "../components/LeaderboardList/Leaderboard";
 import OperationsForm from "../components/OperationsForm"; 
 
 import { QUERY_DATA } from "../utils/queries"; 
