@@ -1,13 +1,13 @@
 import { useQuery } from "@apollo/client";
 
-import MonsterList from "../components/LeaderboardList";
-import MonsterForm from "../components/OperationsForm";
+import LeaderboardList from "../components/LeaderboardList";
+import OperationsForm from "../components/OperationsForm"; 
 
-import { QUERY_MONSTERS } from "../utils/queries";
+import { QUERY_DATA } from "../utils/queries"; 
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_MONSTERS);
-  const monsters = data?.monsters || [];
+  const { loading, data } = useQuery(QUERY_DATA); 
+  const results = data?.results || []; 
 
   return (
     <main>
@@ -16,13 +16,13 @@ const Home = () => {
           className='col-12 col-md-10 mb-3 p-3'
           style={{ border: "1px dotted #1a1a1a" }}
         >
-          <MonsterForm />
+          <OperationsForm />
         </div>
         <div className='col-12 col-md-8 mb-3'>
           {loading ? (
             <div>Loading...</div>
           ) : (
-            <MonsterList monsters={monsters} title='Witcher Monsters' />
+            <LeaderboardList data={results} title='Leaderboard' /> 
           )}
         </div>
       </div>
