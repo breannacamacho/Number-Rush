@@ -2,14 +2,14 @@ import React from 'react';
 import { useQuery } from "@apollo/client";
 import OperationsForm from "../components/OperationsForm"; 
 import LeaderboardList from "../components/LeaderboardList/Leaderboard";  // Ensure this path is correct
-import { QUERY_DATA } from "../utils/queries"; 
+// import { QUERY_DATA } from "../utils/queries"; 
 
 const Home = () => {
   const { loading, error, data } = useQuery(QUERY_DATA); 
   const results = data?.results || []; 
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching data</div>;
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <div>Error fetching data</div>;
 
   return (
     <main className="home-page">
