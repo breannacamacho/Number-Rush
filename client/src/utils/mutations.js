@@ -1,15 +1,7 @@
-<<<<<<< HEAD
-import { gql } from "@apollo/client";
-
-// Mutation to log in the user
-export const LOGIN_USER = gql`
-  mutation login($email: String!, $password: String!) {
-=======
  import { gql } from "@apollo/client";
 
  export const LOGIN_USER = gql`
    mutation login($email: String!, $password: String!) {
->>>>>>> d9aa0462e826e16f404ae1bf116dce1ad92fc132
     login(email: $email, password: $password) {
       token
       user {
@@ -20,10 +12,6 @@ export const LOGIN_USER = gql`
   }
 `;
 
-<<<<<<< HEAD
-// Mutation to add/register a new user
-=======
->>>>>>> d9aa0462e826e16f404ae1bf116dce1ad92fc132
 export const ADD_USER = gql`
   mutation addUser($username: String!, $email: String!, $password: String!) {
     addUser(username: $username, email: $email, password: $password) {
