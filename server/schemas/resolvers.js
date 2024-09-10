@@ -26,7 +26,15 @@ const resolvers = {
     // Get a single quiz by its ID
     quiz: async (parent, { _id }) => {
       return Quiz.findById(_id).populate('questions');
-    }
+    },
+
+    // Get logged-in user's details
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return User.findById(context.user._id).populate('scores');
+      }
+      throw new AuthenticationError('You must be logged in!');
+    },
   },
   
   Mutation: {
