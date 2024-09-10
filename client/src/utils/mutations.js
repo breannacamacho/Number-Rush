@@ -1,124 +1,70 @@
-// import { gql } from "@apollo/client";
+import { gql } from "@apollo/client";
 
-// export const LOGIN_USER = gql`
-//   mutation login($email: String!, $password: String!) {
-//     login(email: $email, password: $password) {
-//       token
-//       user {
-//         _id
-//         username
-//       }
-//     }
-//   }
-// `;
+// Mutation to log in the user
+export const LOGIN_USER = gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      user {
+        _id
+        username
+      }
+    }
+  }
+`;
 
-// export const ADD_USER = gql`
-//   mutation addUser($username: String!, $email: String!, $password: String!) {
-//     addUser(username: $username, email: $email, password: $password) {
-//       token
-//       user {
-//         _id
-//         username
-//       }
-//     }
-//   }
-// `;
+// Mutation to add/register a new user
+export const ADD_USER = gql`
+  mutation addUser($username: String!, $email: String!, $password: String!) {
+    addUser(username: $username, email: $email, password: $password) {
+      token
+      user {
+        _id
+        username
+      }
+    }
+  }
+`;
 
-// export const ADD_MONSTER = gql`
-//   mutation addMonster(
-//     $monsterName: String!
-//     $type: String!
-//     $habitat: String!
-//     $weaknesses: [String]!
-//   ) {
-//     addMonster(
-//       monsterName: $monsterName
-//       type: $type
-//       habitat: $habitat
-//       weaknesses: $weaknesses
-//     ) {
-//       weaknesses
-//       habitat
-//       type
-//       monsterName
-//       _id
-//     }
-//   }
-// `;
+// Mutation to add a score for a math quiz
+export const ADD_SCORE = gql`
+  mutation addScore($userId: ID!, $score: Int!, $operation: String!) {
+    addScore(userId: $userId, score: $score, operation: $operation) {
+      _id
+      score
+      operation
+      createdAt
+    }
+  }
+`;
 
-// export const ADD_COMMENT = gql`
-//   mutation addComment($monsterId: ID!, $commentText: String!) {
-//     addComment(monsterId: $monsterId, commentText: $commentText) {
-//       _id
-//       comments {
-//         _id
-//         commentText
-//         createdAt
-//       }
-//     }
-//   }
-// `;
+// Mutation to update a user's profile (e.g., username or email)
+export const UPDATE_USER = gql`
+  mutation updateUser($username: String, $email: String) {
+    updateUser(username: $username, email: $email) {
+      _id
+      username
+      email
+    }
+  }
+`;
 
-// export const REMOVE_MONSTER = gql`
-//   mutation removeMonster($monsterId: ID!) {
-//     removeMonster(monsterId: $monsterId) {
-//       _id
-//     }
-//   }
-// `;
+// Mutation to delete a user's score by score ID
+export const REMOVE_SCORE = gql`
+  mutation removeScore($scoreId: ID!) {
+    removeScore(scoreId: $scoreId) {
+      _id
+    }
+  }
+`;
 
-// export const REMOVE_COMMENT = gql`
-//   mutation removeComment($monsterId: ID!, $commentId: ID!) {
-//     removeComment(monsterId: $monsterId, commentId: $commentId) {
-//       _id
-//       comments {
-//         _id
-//         commentText
-//       }
-//     }
-//   }
-// `;
-
-// export const UPDATE_COMMENT = gql`
-//   mutation updateComment(
-//     $monsterId: ID!
-//     $commentId: ID!
-//     $commentText: String!
-//   ) {
-//     updateComment(
-//       monsterId: $monsterId
-//       commentId: $commentId
-//       commentText: $commentText
-//     ) {
-//       _id
-//       comments {
-//         _id
-//         commentText
-//       }
-//     }
-//   }
-// `;
-
-// export const UPDATE_MONSTER = gql`
-//   mutation updateMonster(
-//     $monsterId: ID!
-//     $monsterName: String
-//     $type: String
-//     $habitat: String
-//     $weaknesses: [String]
-//   ) {
-//     updateMonster(
-//       monsterId: $monsterId
-//       monsterName: $monsterName
-//       type: $type
-//       habitat: $habitat
-//       weaknesses: $weaknesses
-//     ) {
-//       _id
-//       monsterName
-//       type
-//       habitat
-//       weaknesses
-//     }
-//   }
-// `;
+// Mutation to update a specific score (e.g., if you allow corrections or updates)
+export const UPDATE_SCORE = gql`
+  mutation updateScore($scoreId: ID!, $score: Int!) {
+    updateScore(scoreId: $scoreId, score: $score) {
+      _id
+      score
+      updatedAt
+    }
+  }
+`;

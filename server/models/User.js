@@ -12,7 +12,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    match: [/.+@.+\..+/, "Must match an email address!"],
+    match: [/.+@.+\..+/, "Must match a valid email address!"],
   },
   password: {
     type: String,
@@ -21,18 +21,20 @@ const userSchema = new Schema({
   },
   score: {
     type: Number,
+    default: 0, // Initialize a default score of 0 for new users
   },
 });
 
+// Hash password before saving it to the database
 userSchema.pre("save", async function (next) {
   if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
-
   next();
 });
 
+// Method to check if the entered password matches the hashed password in the database
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };

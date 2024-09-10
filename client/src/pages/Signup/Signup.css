@@ -1,0 +1,46 @@
+.signup-page {
+    background-color: #00BFFF; /* Electric Blue background */
+    padding: 50px;
+  }
+  
+  .signup-card {
+    background-color: #FF8C00; /* Bright Orange */
+    border: 1px solid #FFD700; /* Sunset Yellow for the border */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-header {
+    font-size: 1.5rem;
+    background-color: #FF8C00; /* Bright Orange */
+    color: white;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #FFD700; /* Sunset Yellow border */
+    border-radius: 5px;
+  }
+  
+  .signup-button {
+    background-color: #32CD32; /* Neon Green */
+    color: white;
+    padding: 10px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .signup-button:hover {
+    background-color: #B22222; /* Deep Red on hover */
+  }
+  
+  .bg-danger {
+    background-color: #B22222; /* Deep Red for error background */
+  }  

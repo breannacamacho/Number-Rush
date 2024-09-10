@@ -1,0 +1,45 @@
+/* Error Page Layout */
+#error-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #00BFFF; 
+    color: white;
+  }
+  
+
+  h1 {
+    font-size: 3rem;
+    color: #FF8C00; 
+    margin-bottom: 20px;
+  }
+  
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #FFD700; 
+  }
+  
+
+  button.go-home-btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+    color: white;
+    background-color: #32CD32; 
+    border: 2px solid #FFD700; 
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  button.go-home-btn:hover {
+    background-color: #FF8C00; 
+    transform: translateY(-5px); 
+  }
+  
+  h1, p {
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
+  }  

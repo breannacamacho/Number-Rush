@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-const bcrypt = require("bcrypt");
 
 const questionSchema = new Schema({
   question: {
@@ -30,4 +29,4 @@ const questionSchema = new Schema({
 
 const Question = model("Question", questionSchema);
 
-module.exports = questionSchema;
+module.exports = Question;

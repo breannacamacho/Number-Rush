@@ -1,15 +1,14 @@
 import React from 'react';
-import { useScore } from '../../components/context/ScoreContext';
+import { useScore } from '../context/scoreContext';
 
 const Scoreboard = () => {
-    const { score } = useScore();
+  const { score } = useScore(); 
 
-    return (
-        <div className="scoreboard">
-            <h2>Scoreboard</h2>
-            <p>Current Score: {score}</p>
-        </div>
-    );
+  return (
+    <div className="scoreboard">
+      <h2>Current Score: {score}</h2>
+    </div>
+  );
 };
 
 export default Scoreboard;
