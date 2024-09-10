@@ -6,6 +6,7 @@ const typeDefs = gql`
     username: String
     email: String
     score: Int
+    scores: [Score]  # If you have multiple scores associated with a user
   }
 
   type Auth {
@@ -29,12 +30,20 @@ const typeDefs = gql`
     title: String
   }
 
+  type Score {
+    _id: ID
+    score: Int
+    operation: String
+    createdAt: String
+  }
+
   type Query {
     users: [User]
     getQuestion(_id: ID!): Question
     leaderboard: [User]  # Leaderboard directly returns users sorted by their scores
     quizzes: [Quiz]  # Get all quizzes
     quiz(_id: ID!): Quiz  # Get a single quiz by ID
+    me: User  # This is the new query for fetching logged-in user details
   }
 
   type Mutation {
@@ -46,4 +55,4 @@ const typeDefs = gql`
   }
 `;
 
-module.exports = typeDefs;
+module.exports = typeDefs;1
