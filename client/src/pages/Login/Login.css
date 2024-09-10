@@ -89,3 +89,34 @@
     text-decoration: underline;
   }
   
+
+
+/* Styling for the voice command button */
+.voice-command-button {
+  display: block;
+  margin: 20px auto; 
+  padding: 10px 20px; 
+  background-color: #007bff; 
+  color: #fff; 
+  border: none; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  cursor: pointer; 
+  text-align: center; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  transition: background-color 0.3s, box-shadow 0.3s; 
+}
+
+.voice-command-button:hover {
+  background-color: #0056b3; 
+}
+
+.voice-command-button:active {
+  background-color: #004494; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); 
+}
+
+.voice-command-button:focus {
+  outline: none; 
+  box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5); 
+}

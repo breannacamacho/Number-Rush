@@ -12,7 +12,7 @@ const Signup = () => {
     password: '',
   });
 
-  const [addUser, { error, data }] = useMutation(ADD_USER);
+  const [addUser, { error, data, loading }] = useMutation(ADD_USER);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -34,12 +34,57 @@ const Signup = () => {
     }
   };
 
+  const startVoiceRecognition = () => {
+    if (!('webkitSpeechRecognition' in window)) {
+      alert("Sorry, your browser does not support speech recognition.");
+      return;
+    }
+
+    const recognition = new window.webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.onstart = () => {
+      console.log("Voice recognition started. Speak now.");
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      console.log("Voice command:", transcript);
+
+      if (transcript.toLowerCase().includes("username")) {
+        const username = transcript.split("username").pop().trim();
+        setFormState((prevState) => ({ ...prevState, username }));
+      } else if (transcript.toLowerCase().includes("email")) {
+        const email = transcript.split("email").pop().trim();
+        setFormState((prevState) => ({ ...prevState, email }));
+      } else if (transcript.toLowerCase().includes("password")) {
+        const password = transcript.split("password").pop().trim();
+        setFormState((prevState) => ({ ...prevState, password }));
+      } else if (transcript.toLowerCase().includes("sign up")) {
+        handleFormSubmit({ preventDefault: () => {} });
+      }
+    };
+
+    recognition.onerror = (event) => {
+      console.error("Speech recognition error", event.error);
+    };
+
+    recognition.onend = () => {
+      console.log("Voice recognition ended.");
+    };
+
+    recognition.start();
+  };
+
   return (
     <main className="flex-row justify-center mb-4 signup-page">
       <div className="col-12 col-lg-8">
         <div className="card signup-card">
           <h4 className="card-header bg-primary text-light p-2">Create Your Account</h4>
           <div className="card-body">
+            {loading && <p className="loading-text">Creating account...</p>}
             {data ? (
               <p>
                 Success! <Link to="/">Back to the homepage.</Link>
@@ -102,6 +147,10 @@ const Signup = () => {
                 Something went wrong: {error.message}
               </div>
             )}
+
+            <button onClick={startVoiceRecognition} className="voice-command-button">
+              Use Voice Commands
+            </button>
           </div>
         </div>
       </div>
