@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from "@apollo/client";
 import OperationsForm from "../components/OperationsForm"; 
-import LeaderboardList from "../components/LeaderboardList/Leaderboard"; 
+import LeaderboardList from "../components/LeaderboardList/Leaderboard";  // Ensure this path is correct
 import { QUERY_DATA } from "../utils/queries"; 
 
 const Home = () => {

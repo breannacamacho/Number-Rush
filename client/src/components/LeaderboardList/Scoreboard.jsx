@@ -1,8 +1,8 @@
 import React from 'react';
-import { useScore } from '../context/scoreContext'; 
+import { useScore } from '../context/ScoreContext'; // Ensure this path is correct
 
 const Scoreboard = () => {
-    const { score } = useScore();
+    const { score } = useScore(); // Destructure score from useScore hook
 
   return (
     <div className="scoreboard">
