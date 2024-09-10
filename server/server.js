@@ -4,7 +4,6 @@ const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const cors = require('cors');
-
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
@@ -23,10 +22,11 @@ const startApolloServer = async () => {
   app.use(express.json());
 
   app.use('/graphql', 
-    cors({ origin: ['http://localhost:3000'] }),
+    cors({ origin: ['http://localhost:3000'] }),  // Ensure correct CORS origin for your frontend
     expressMiddleware(server, {
-      context: authMiddleware,
-  }));
+      context: authMiddleware,  // Attach auth middleware to context
+    })
+  );
 
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -45,4 +45,4 @@ const startApolloServer = async () => {
 };
 
 // Call the async function to start the server
-  startApolloServer();
+startApolloServer();

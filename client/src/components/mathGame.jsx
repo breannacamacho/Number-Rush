@@ -5,7 +5,6 @@ const generateRandomQuestion = (mathType) => {
   const num1 = Math.floor(Math.random() * 10) + 1;
   const num2 = Math.floor(Math.random() * 10) + 1;
   // Question generation logic remains the same
-  // ...
 };
 
 const MathGame = () => {

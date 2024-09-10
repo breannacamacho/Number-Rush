@@ -1,12 +1,12 @@
 import { gql } from "@apollo/client";
-export const QUERY_DATA = gql`
-  query getData {
-    data {
-      field1
-      field2
-    }
-  }
-`;
+// export const QUERY_DATA = gql`
+//   query getData {
+//     data {
+//       field1
+//       field2
+//     }
+//   }
+// `;
 
 
 // Query to get the leaderboard (sorted scores with user info)
