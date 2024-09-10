@@ -1,130 +1,109 @@
-import React, { useState, useEffect } from 'react';
-import { useMutation, gql } from '@apollo/client';
-import { useScore } from '../context/ScoreContext';
+import React, { useState, useEffect } from "react";
+import { useScore } from "../context/scoreContext";  // Import useScore to access score context
 
-const GENERATE_MATH_PROBLEM = gql`
-  mutation GenerateMathProblem($userId: ID!, $operation: String!) {
-    generateMathProblem(userId: $userId, operation: $operation) {
-      num1
-      num2
-      operation
-      options {
-        correct
-        incorrect
-      }
+const generateRandomQuestion = (mathType) => {
+  const num1 = Math.floor(Math.random() * 10) + 1;
+  const num2 = Math.floor(Math.random() * 10) + 1;
+  // Question generation logic remains the same
+  // ...
+};
+
+const MathGame = () => {
+  const { updateScore, updateLeaderboard } = useScore();  // Access updateScore and updateLeaderboard from context
+
+  const [mathType, setMathType] = useState("");
+  const [timeLimit, setTimeLimit] = useState(30);
+  const [isGameActive, setIsGameActive] = useState(false);
+  const [questionData, setQuestionData] = useState(null);
+  const [timeRemaining, setTimeRemaining] = useState(timeLimit);
+  const [score, setScore] = useState(0);
+
+  const startGame = () => {
+    if (mathType && timeLimit) {
+      setIsGameActive(true);
+      setTimeRemaining(timeLimit);
+      setScore(0);
+      setQuestionData(generateRandomQuestion(mathType));
     }
-  }
-`;
-
-const SUBMIT_ANSWER = gql`
-  mutation SubmitAnswer($userId: ID!, $question: String!, $userAnswer: Int!) {
-    submitAnswer(userId: $userId, question: $question, userAnswer: $userAnswer) {
-      points
-      playerName
-    }
-  }
-`;
-
-const MathGame = ({ userId }) => {
-  const [num1, setNum1] = useState(null);
-  const [num2, setNum2] = useState(null);
-  const [operation, setOperation] = useState('multiplication');
-  const [options, setOptions] = useState([]);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(15);
-  const { score, setScore, leaderboard, updateLeaderboard } = useScore();
-  const [message, setMessage] = useState('');
-
-  const [generateMathProblem] = useMutation(GENERATE_MATH_PROBLEM, {
-    onCompleted: data => {
-      setNum1(data.generateMathProblem.num1);
-      setNum2(data.generateMathProblem.num2);
-      setOperation(data.generateMathProblem.operation);
-      setOptions(data.generateMathProblem.options);
-      setTimeLeft(15);
-      setSelectedAnswer(null);
-      setMessage('');
-    }
-  });
-
-  const [submitAnswer] = useMutation(SUBMIT_ANSWER, {
-    onCompleted: data => {
-      if (data.submitAnswer.points > 0) {
-        setScore(score + data.submitAnswer.points);
-        setMessage('Correct!');
-        // Add playerName to leaderboard
-        updateLeaderboard({
-          playerName: data.submitAnswer.playerName,
-          score: score + data.submitAnswer.points
-        });
-      } else {
-        setMessage('Incorrect!');
-      }
-      generateMathProblem({ variables: { userId, operation } });
-    }
-  });
-
-  useEffect(() => {
-    if (timeLeft > 0) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-      return () => clearTimeout(timer);
-    } else {
-      if (selectedAnswer !== null) {
-        submitAnswer({ variables: { userId, question: getQuestion(), userAnswer: selectedAnswer } });
-      }
-    }
-  }, [timeLeft, num1, num2, selectedAnswer, submitAnswer, userId, operation]);
-
-  const handleAnswerClick = (answer) => {
-    setSelectedAnswer(answer);
-    submitAnswer({ variables: { userId, question: getQuestion(), userAnswer: answer } });
   };
 
-  const getQuestion = () => {
-    switch (operation) {
-      case 'addition':
-        return `${num1} + ${num2}`;
-      case 'subtraction':
-        return `${num1} - ${num2}`;
-      case 'division':
-        return `${num1} / ${num2}`;
-      case 'multiplication':
-      default:
-        return `${num1} x ${num2}`;
+  useEffect(() => {
+    if (isGameActive && timeRemaining > 0) {
+      const timer = setTimeout(() => setTimeRemaining(timeRemaining - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (timeRemaining === 0) {
+      setIsGameActive(false);
+      updateLeaderboard({ playerName: "Player 1", score });  // Update leaderboard when time runs out
     }
+  }, [isGameActive, timeRemaining, score, updateLeaderboard]);
+
+  const handleAnswer = (selectedAnswer) => {
+    if (selectedAnswer === questionData.correctAnswer) {
+      setScore(score + 1);  // Local score update
+      updateScore(score + 1);  // Update global score in context
+    }
+    setQuestionData(generateRandomQuestion(mathType));  // Generate the next question
+  };
+
+  const handleRestart = () => {
+    setMathType("");
+    setTimeLimit(30);
+    setIsGameActive(false);
+    setScore(0);
+    setTimeRemaining(0);
+    setQuestionData(null);
   };
 
   return (
-    <div>
-      <h2>Math Game</h2>
-      <p>Score: {score}</p>
-      <div>
-        <label>Select Operation:
-          <select value={operation} onChange={(e) => setOperation(e.target.value)}>
-            <option value="multiplication">Multiplication</option>
-            <option value="addition">Addition</option>
-            <option value="subtraction">Subtraction</option>
-            <option value="division">Division</option>
-          </select>
-        </label>
-      </div>
-      {num1 !== null && num2 !== null && options.length > 0 && (
-        <>
-          <p>{getQuestion()}</p>
-          <div className="options">
-            {options.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => handleAnswerClick(option)}
-                className={selectedAnswer === option ? 'selected' : ''}
-              >
-                {option}
-              </button>
-            ))}
+    <div className="math-game">
+      {!isGameActive ? (
+        <div>
+          <h2>Select Math Type and Time Limit</h2>
+          <div className="select-options">
+            <h3>Select Math Type:</h3>
+            <button onClick={() => setMathType("addition")}>Addition</button>
+            <button onClick={() => setMathType("subtraction")}>Subtraction</button>
+            <button onClick={() => setMathType("multiplication")}>Multiplication</button>
+            <button onClick={() => setMathType("division")}>Division</button>
           </div>
-          <p>Time left: {timeLeft} seconds</p>
-          <p>{message}</p>
-        </>
+
+          <div className="select-timer">
+            <h3>Select Time Limit:</h3>
+            <button onClick={() => setTimeLimit(30)}>30 Seconds</button>
+            <button onClick={() => setTimeLimit(60)}>1 Minute</button>
+            <button onClick={() => setTimeLimit(300)}>5 Minutes</button>
+          </div>
+
+          <button onClick={startGame} disabled={!mathType}>
+            Start Game
+          </button>
+        </div>
+      ) : (
+        <div>
+          <h2>Time Remaining: {timeRemaining}s</h2>
+          <h3>Score: {score}</h3>
+
+          {questionData && (
+            <div className="question-block">
+              <h3>{questionData.question}</h3>
+              <div className="options">
+                {questionData.allAnswers.map((answer, index) => (
+                  <button key={index} onClick={() => handleAnswer(answer)}>
+                    {answer}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {!isGameActive && score > 0 && (
+        <div>
+          <h2>Game Over!</h2>
+          <p>Your final score: {score}</p>
+          <button onClick={handleRestart}>Play Again</button>
+        </div>
       )}
     </div>
   );

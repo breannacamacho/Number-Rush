@@ -5,13 +5,16 @@ const OperationsForm = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    if (!operation) {
+      alert("Please select an operation before submitting.");
+      return;
+    }
     console.log("Selected operation:", operation);
-    // Reset the form state
-    setOperation("");
+    setOperation(""); 
   };
 
   const handleChange = (event) => {
-    setOperation(event.target.value); 
+    setOperation(event.target.value);
   };
 
   return (
@@ -19,26 +22,28 @@ const OperationsForm = () => {
       <h3>Select Math Operation</h3>
 
       <form
-        className='flex-row justify-center justify-space-between-md align-center'
+        className="flex-row justify-center justify-space-between-md align-center"
         onSubmit={handleFormSubmit}
       >
-        <div className='col-12 col-lg-9'>
+        <div className="col-12 col-lg-9">
+          <label htmlFor="operation">Choose a math operation:</label>
           <select
-            name='operation'
+            id="operation"
+            name="operation"
             value={operation}
             onChange={handleChange}
-            className='form-select w-100'
+            className="form-select w-100"
           >
-            <option value=''>--Select an Operation--</option>
-            <option value='addition'>Addition</option>
-            <option value='subtraction'>Subtraction</option>
-            <option value='multiplication'>Multiplication</option>
-            <option value='division'>Division</option>
+            <option value="">--Select an Operation--</option>
+            <option value="addition">Addition</option>
+            <option value="subtraction">Subtraction</option>
+            <option value="multiplication">Multiplication</option>
+            <option value="division">Division</option>
           </select>
         </div>
 
-        <div className='col-12 col-lg-3'>
-          <button className='btn btn-primary btn-block py-3' type='submit'>
+        <div className="col-12 col-lg-3">
+          <button className="btn btn-primary btn-block py-3" type="submit">
             Submit
           </button>
         </div>

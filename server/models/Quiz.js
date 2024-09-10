@@ -1,12 +1,13 @@
 const { Schema, model } = require("mongoose");
-const bcrypt = require("bcrypt");
 
 const quizSchema = new Schema({
-  questions: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: "Question"
-  },
+  questions: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Question",
+      required: true,
+    },
+  ],
   title: {
     type: String,
     required: true,

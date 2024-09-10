@@ -3,13 +3,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./App.jsx";
 import Home from "./pages/Home";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-// import SingleMonster from "./pages/SingleMonster";
+import Signup from "./pages/Signup/Signup.jsx";
+import Login from "./pages/Login/Login.jsx";
 import Profile from "./pages/Profile";
-import ErrorPage from "./pages/ErrorPage";
-import FlashcardPage from "./pages/FlashcardPage.jsx";
-
+import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,10 +34,6 @@ const router = createBrowserRouter([
         path: "/me",
         element: <Profile />,
       },
-      // {
-      //   path: "/monsters/:monsterId",
-      //   element: <SingleMonster />,
-      // },
     ],
   },
 ]);

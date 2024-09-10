@@ -1,88 +1,85 @@
-// import { useState } from "react";
-// import { Link } from "react-router-dom";
-// import { useMutation } from "@apollo/client";
+import React, { useState } from "react";
+import Auth from "../../utils/auth";
+// import { useMutation } from "@apollo/client";  // Uncomment if using GraphQL mutations
 
-// import { ADD_COMMENT } from "../../utils/mutations";
+// import { SUBMIT_ANSWER } from "../../utils/mutations"; // Example mutation for answer submission
 
-// import Auth from "../../utils/auth";
+const QuizForm = ({ questionData, handleNextQuestion }) => {
+  const [userAnswer, setUserAnswer] = useState("");
+  const [feedback, setFeedback] = useState(null);
+  const [isAnswered, setIsAnswered] = useState(false);
 
-// const CommentForm = ({ monsterId }) => {
-//   const [commentText, setCommentText] = useState("");
-//   const [characterCount, setCharacterCount] = useState(0);
+  // Uncomment for mutation example if needed
+  // const [submitAnswer, { error }] = useMutation(SUBMIT_ANSWER);
 
-//   const [addComment, { error }] = useMutation(ADD_COMMENT);
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    
+    // Validate the user's answer
+    const isCorrect = parseInt(userAnswer) === questionData.correctAnswer;
+    setFeedback(isCorrect ? "Correct!" : "Incorrect, try again.");
+    setIsAnswered(true);
 
-//   const handleFormSubmit = async (event) => {
-//     event.preventDefault();
+    // If using GraphQL to submit answers, you could do:
+    /*
+    try {
+      const { data } = await submitAnswer({
+        variables: {
+          questionId: questionData.id,
+          userAnswer: parseInt(userAnswer),
+          answerAuthor: Auth.getProfile().data.username,
+        },
+      });
+      // Handle the response or state update here
+    } catch (err) {
+      console.error(err);
+    }
+    */
 
-//     try {
-//       const { data } = await addComment({
-//         variables: {
-//           monsterId,
-//           commentText,
-//           commentAuthor: Auth.getProfile().data.username,
-//         },
-//       });
+    // Reset the answer for the next question after a short delay
+    setTimeout(() => {
+      setFeedback(null);
+      setUserAnswer("");
+      handleNextQuestion();  // Move to the next question
+      setIsAnswered(false);
+    }, 2000);
+  };
 
-//       setCommentText("");
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   };
+  const handleChange = (event) => {
+    const { value } = event.target;
+    setUserAnswer(value);
+  };
 
-//   const handleChange = (event) => {
-//     const { name, value } = event.target;
+  return (
+    <div>
+      <h3>{questionData.question}</h3>
 
-//     if (name === "commentText" && value.length <= 280) {
-//       setCommentText(value);
-//       setCharacterCount(value.length);
-//     }
-//   };
+      {feedback && <p className={feedback === "Correct!" ? "text-success" : "text-danger"}>{feedback}</p>}
 
-//   return (
-//     <div>
-//       <h4>What are your thoughts on this monster?</h4>
+      <form
+        className="flex-row justify-center justify-space-between-md align-center"
+        onSubmit={handleFormSubmit}
+      >
+        <div className="col-12 col-lg-9">
+          <input
+            type="number"
+            name="userAnswer"
+            placeholder="Enter your answer"
+            value={userAnswer}
+            onChange={handleChange}
+            className="form-input w-100"
+            disabled={isAnswered}  // Disable input after answering
+          />
+        </div>
 
-//       {Auth.loggedIn() ? (
-//         <>
-//           <p
-//             className={`m-0 ${
-//               characterCount === 280 || error ? "text-danger" : ""
-//             }`}
-//           >
-//             Character Count: {characterCount}/280
-//             {error && <span className='ml-2'>{error.message}</span>}
-//           </p>
-//           <form
-//             className='flex-row justify-center justify-space-between-md align-center'
-//             onSubmit={handleFormSubmit}
-//           >
-//             <div className='col-12 col-lg-9'>
-//               <textarea
-//                 name='commentText'
-//                 placeholder='Add your comment...'
-//                 value={commentText}
-//                 className='form-input w-100'
-//                 style={{ lineHeight: "1.5", resize: "vertical" }}
-//                 onChange={handleChange}
-//               ></textarea>
-//             </div>
+        <div className="col-12 col-lg-3">
+          <button className="btn btn-primary btn-block py-3" type="submit" disabled={isAnswered}>
+            Submit Answer
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
 
-//             <div className='col-12 col-lg-3'>
-//               <button className='btn btn-primary btn-block py-3' type='submit'>
-//                 Add Comment
-//               </button>
-//             </div>
-//           </form>
-//         </>
-//       ) : (
-//         <p>
-//           You need to be logged in to share your monsters. Please{" "}
-//           <Link to='/login'>login</Link> or <Link to='/signup'>signup.</Link>
-//         </p>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default CommentForm;
+export default QuizForm;

@@ -21,7 +21,7 @@ const Footer = () => {
           >
             ❤️
           </span>{" "}
-          by a UCF bootcamper team.
+          by team MongoMesh!
         </h4>
       </div>
     </footer>
