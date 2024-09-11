@@ -5,8 +5,8 @@ import LeaderboardList from "../components/LeaderboardList/Leaderboard";  // Ens
 // import { QUERY_DATA } from "../utils/queries"; 
 
 const Home = () => {
-  const { loading, error, data } = useQuery(QUERY_DATA); 
-  const results = data?.results || []; 
+ // const { loading, error, data } = useQuery(QUERY_DATA); 
+ // const results = data?.results || []; 
 
   // if (loading) return <div>Loading...</div>;
   // if (error) return <div>Error fetching data</div>;
@@ -21,7 +21,7 @@ const Home = () => {
           <OperationsForm />
         </div>
         <div className='col-12 col-md-8 mb-3'>
-          <LeaderboardList data={results} title='Leaderboard' /> 
+         <LeaderboardList data={results} title='Leaderboard' /> 
         </div>
       </div>
     </main>

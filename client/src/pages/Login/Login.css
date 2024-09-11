@@ -18,7 +18,7 @@
   
 
   .success-message {
-    color: #32CD32;  
+    color: #111111;  
     font-weight: bold;
   }
   
@@ -81,7 +81,7 @@
   }
   
   .signup-text a {
-    color: #32CD32; 
+    color: #0d0e0d; 
     text-decoration: none;
   }
   
