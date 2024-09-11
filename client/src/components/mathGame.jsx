@@ -4,11 +4,47 @@ import { useScore } from "./context/ScoreContext";  // Import useScore to access
 const generateRandomQuestion = (mathType) => {
   const num1 = Math.floor(Math.random() * 10) + 1;
   const num2 = Math.floor(Math.random() * 10) + 1;
-  // Question generation logic remains the same
+  let question = "";
+  let correctAnswer = null;
+
+  switch (mathType) {
+    case "addition":
+      question = `${num1} + ${num2}`;
+      correctAnswer = num1 + num2;
+      break;
+    case "subtraction":
+      question = `${num1} - ${num2}`;
+      correctAnswer = num1 - num2;
+      break;
+    case "multiplication":
+      question = `${num1} * ${num2}`;
+      correctAnswer = num1 * num2;
+      break;
+    case "division":
+      question = `${num1} / ${num2}`;
+      correctAnswer = (num1 / num2).toFixed(2); // Return up to two decimal places for division
+      break;
+    default:
+      break;
+  }
+
+  // Generate random answers
+  const allAnswers = [
+    correctAnswer,
+    correctAnswer + Math.floor(Math.random() * 10) - 5,
+    correctAnswer + Math.floor(Math.random() * 10) - 5,
+    correctAnswer + Math.floor(Math.random() * 10) - 5,
+  ].sort(() => Math.random() - 0.5); // Shuffle answers
+
+  return {
+    question,
+    correctAnswer,
+    allAnswers,
+  };
 };
 
 const MathGame = () => {
-  const { score, setScore, leaderboard, updateLeaderboard } = useScore();  // Access updateScore and updateLeaderboard from context
+  const { score, setScore, leaderboard, updateLeaderboard } = useScore();  
 
   const [mathType, setMathType] = useState("");
   const [timeLimit, setTimeLimit] = useState(30);
@@ -36,12 +72,12 @@ const MathGame = () => {
   }, [isGameActive, timeRemaining, score, updateLeaderboard]);
 
   const handleAnswer = (selectedAnswer) => {
-    if (selectedAnswer === questionData.correctAnswer) {
+    if (Math.abs(selectedAnswer - questionData.correctAnswer) < 0.01) {  // Add precision check for division
       setScore(score + 1);  // Local score update
-      // updateScore(score + 1);  // Update global score in context
+      updateScore(score + 1);  // Update global score in context
     }
     setQuestionData(generateRandomQuestion(mathType));  // Generate the next question
-  };
+  };  
 
   const handleRestart = () => {
     setMathType("");
