@@ -47,17 +47,21 @@ const resolvers = {
 
     // User login
     login: async (parent, { email, password }) => {
+      console.log(email, password);
       const user = await User.findOne({ email });
+      console.log(user);
       if (!user) {
         throw new AuthenticationError('User not found');
       }
 
       const correctPw = await user.isCorrectPassword(password);
+      console.log(correctPw);
       if (!correctPw) {
         throw new AuthenticationError('Incorrect credentials');
       }
 
       const token = signToken(user);
+      console.log(token);
       return { token, user };
     },
 

@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/mutations";  
 import Auth from "../../utils/auth";
+import { useNavigate } from 'react-router-dom'; 
 import "./Login.css";  
 
 const Login = () => {
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
+  const navigate = useNavigate(); 
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -18,15 +20,19 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("Working!!"); 
     try {
+      console.log(formState);
       const { data } = await login({
-        variables: { ...formState },
+        variables: { formState },
       });
-      Auth.login(data.login.token);
+      Auth.login(data.login.token); // Log the user in
+      navigate('/mathgame'); // Redirect to MathGame after login
     } catch (e) {
-      console.error(e);
+      console.error("Error during login:", e);
     }
   };
+
 
   return (
     <div className="login-container">
@@ -34,12 +40,14 @@ const Login = () => {
       {data ? (
         <p className="success-message">Login successful!</p>
       ) : (
-        <form onSubmit={handleSubmit} className="login-form">
+        <form className="login-form">
           <div className="form-group">
+            {/* Add the `for` and corresponding `id` */}
             <label htmlFor="email" className="login-label">Email:</label>
             <input
               type="email"
               name="email"
+              id="email" // Add id here
               value={formState.email}
               onChange={handleChange}
               className="login-input"
@@ -51,13 +59,14 @@ const Login = () => {
             <input
               type="password"
               name="password"
+              id="password" // Add id here
               value={formState.password}
               onChange={handleChange}
               className="login-input"
               required
             />
           </div>
-          <button type="submit" className="login-button">
+          <button type="submit" className="login-button" onClick={handleSubmit}>
             Login
           </button>
           {error && <p className="error-text">Login failed: {error.message}</p>}

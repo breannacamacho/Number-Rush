@@ -1,12 +1,18 @@
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 import App from "./App.jsx";
-import Home from "./pages/Home";
-import Signup from "./pages/Signup/Signup.jsx";
+import LandingPage from "./components/LandingPage.jsx";
 import Login from "./pages/Login/Login.jsx";
-import Profile from "./pages/Profile";
+import Signup from "./pages/Signup/Signup.jsx";
 import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
+import MathGame from "./components/MathGame.jsx";
+
+// const client = new ApolloClient({
+//   uri: "https://your-graphql-endpoint.com/graphql",
+//   cache: new InMemoryCache(),
+// });
 
 const router = createBrowserRouter([
   {
@@ -16,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <LandingPage />,
       },
       {
         path: "/login",
@@ -27,17 +33,15 @@ const router = createBrowserRouter([
         element: <Signup />,
       },
       {
-        path: "/profiles/:username",
-        element: <Profile />,
+        path: "/mathgame",
+        element: <MathGame />,
       },
-      {
-        path: "/me",
-        element: <Profile />,
-      },
-    ],
-  },
+    ]
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  // <ApolloProvider client={client}> {/* Wrap the app with ApolloProvider */}
+    <RouterProvider router={router} />
+  // </ApolloProvider>
 );
