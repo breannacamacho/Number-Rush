@@ -20,7 +20,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: url('your-background-image.jpg') no-repeat center center fixed; /* Add your image path here */
+  background: url("../../assets/images/Image from iOs.jpg"); /* Add your image path here */
   background-size: cover;
   color: #1a1a1a;
   display: flex;
