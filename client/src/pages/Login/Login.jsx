@@ -30,16 +30,15 @@ const Login = () => {
   };
 
   const startVoiceRecognition = () => {
-    // Check if browser supports Web Speech API
     if (!('webkitSpeechRecognition' in window)) {
       alert("Sorry, your browser does not support speech recognition.");
       return;
     }
 
     const recognition = new window.webkitSpeechRecognition();
-    recognition.continuous = false; // Set to true if you want continuous recognition
+    recognition.continuous = false;
     recognition.interimResults = false;
-    recognition.lang = 'en-US'; // Set the language
+    recognition.lang = 'en-US';
 
     recognition.onstart = () => {
       console.log("Voice recognition started. Speak now.");
@@ -49,7 +48,6 @@ const Login = () => {
       const transcript = event.results[0][0].transcript;
       console.log("Voice command:", transcript);
 
-      // Simple command parsing
       if (transcript.toLowerCase().includes("email")) {
         const email = transcript.split("email").pop().trim();
         setFormState((prevState) => ({ ...prevState, email }));
@@ -57,7 +55,7 @@ const Login = () => {
         const password = transcript.split("password").pop().trim();
         setFormState((prevState) => ({ ...prevState, password }));
       } else if (transcript.toLowerCase().includes("login")) {
-        handleSubmit({ preventDefault: () => {} }); // Submit the form programmatically
+        handleSubmit({ preventDefault: () => {} });
       }
     };
 
