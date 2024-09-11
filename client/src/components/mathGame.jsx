@@ -38,7 +38,7 @@ const MathGame = () => {
   const handleAnswer = (selectedAnswer) => {
     if (selectedAnswer === questionData.correctAnswer) {
       setScore(score + 1);  // Local score update
-      updateScore(score + 1);  // Update global score in context
+      // updateScore(score + 1);  // Update global score in context
     }
     setQuestionData(generateRandomQuestion(mathType));  // Generate the next question
   };
