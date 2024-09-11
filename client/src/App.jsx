@@ -8,6 +8,8 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { ScoreProvider } from './components/context/ScoreContext';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 
 const httpLink = createHttpLink({
@@ -34,12 +36,9 @@ function App() {
     <ApolloProvider client={client}>
       <ScoreProvider>
     <div className="App">
-      <header>
-        <h1>Welcome to NUMBER-RUSH</h1>
-        {/* You can include your header/navigation here */}
-      </header>
-      {/* Outlet renders the matched child route */}
+      <Header />
       <Outlet />
+      <Footer />
     </div>
     </ScoreProvider>
     </ApolloProvider>
