@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const userSchema = new Schema({
   username: {
     type: String,
-    // required: true,
     unique: true,
     trim: true,
   },
@@ -19,9 +18,14 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  score: {
-    type: Number,
-    default: 0, // Initialize a default score of 0 for new users
+  scores: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Quiz', // Reference to Quiz model for multiple quiz attempts
+    },
+  ],
+  profilePhoto: {
+    type: String, // Path or URL to the uploaded profile photo
   },
 });
 

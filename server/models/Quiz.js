@@ -1,20 +1,30 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const quizSchema = new Schema({
-  questions: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Question",
-      required: true,
-    },
-  ],
-  title: {
-    type: String,
-    required: true,
-    unique: true,
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
+  operation: {
+    type: String,
+    enum: ['addition', 'subtraction', 'multiplication', 'division'],
+    required: true
+  },
+  timeLimit: {
+    type: String,
+    enum: ['30s', '1m', '5m'], 
+  },
+  score: {
+    type: Number,
+    required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  }
 });
 
-const Quiz = model("Quiz", quizSchema);
+const Quiz = model('Quiz', quizSchema);
 
 module.exports = Quiz;
