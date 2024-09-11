@@ -7,14 +7,8 @@ import "./Login.css";
 
 const Login = () => {
   const [formState, setFormState] = useState({ email: "", password: "" });
-  const [login, { error, data }] = useMutation(LOGIN_USER);
-  const navigate = useNavigate(); 
-import "./Login.css";
-
-const Login = () => {
-  const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data, loading }] = useMutation(LOGIN_USER);
-  const [recognition, setRecognition] = useState(null);
+  const navigate = useNavigate(); 
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -26,11 +20,11 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Working!!"); 
+    console.log("Working!!");
     try {
       console.log(formState);
       const { data } = await login({
-        variables: { formState },
+        variables: { email: formState.email, password: formState.password }, // Pass email and password separately
       });
       Auth.login(data.login.token); // Log the user in
       navigate('/mathgame'); // Redirect to MathGame after login
