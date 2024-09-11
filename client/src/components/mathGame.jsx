@@ -78,6 +78,7 @@ const MathGame = () => {
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [recognition, setRecognition] = useState(null);
 
   const startGame = () => {
     if (mathType && timeLimit) {
@@ -118,6 +119,55 @@ const MathGame = () => {
     setQuestionData(null);
     setTotalQuestions(0);
     setCorrectAnswers(0);
+  };
+
+  const startVoiceRecognition = () => {
+    if (!('webkitSpeechRecognition' in window)) {
+      alert("Sorry, your browser does not support speech recognition.");
+      return;
+    }
+
+    const recognitionInstance = new window.webkitSpeechRecognition();
+    recognitionInstance.continuous = false;
+    recognitionInstance.interimResults = false;
+    recognitionInstance.lang = 'en-US';
+
+    recognitionInstance.onstart = () => {
+      console.log("Voice recognition started. Speak now.");
+    };
+
+    recognitionInstance.onresult = (event) => {
+      const transcript = event.results[0][0].transcript.toLowerCase();
+      console.log("Voice command:", transcript);
+
+      if (transcript.includes("start game")) {
+        startGame();
+      } else if (transcript.includes("addition") || transcript.includes("subtraction") || transcript.includes("multiplication") || transcript.includes("division")) {
+        const type = transcript.trim();
+        setMathType(type);
+        startGame();
+      } else if (transcript.includes("pause game")) {
+        setIsGameActive(false);
+      } else if (transcript.includes("answer")) {
+        const answer = transcript.match(/\d+(\.\d+)?/);
+        if (answer) {
+          handleAnswer(parseFloat(answer[0]));
+        }
+      } else if (transcript.includes("restart")) {
+        handleRestart();
+      }
+    };
+
+    recognitionInstance.onerror = (event) => {
+      console.error("Speech recognition error", event.error);
+    };
+
+    recognitionInstance.onend = () => {
+      console.log("Voice recognition ended.");
+    };
+
+    recognitionInstance.start();
+    setRecognition(recognitionInstance);
   };
 
   return (
@@ -175,6 +225,10 @@ const MathGame = () => {
           <button onClick={handleRestart}>Play Again</button>
         </div>
       )}
+
+      <button onClick={startVoiceRecognition} className="voice-command-button">
+        Use Voice Commands
+      </button>
     </div>
   );
 };
