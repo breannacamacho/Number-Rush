@@ -1,5 +1,3 @@
-import decode from 'jwt-decode';
-
 class AuthService {
   getProfile() {
     return decode(this.getToken());
@@ -29,7 +27,8 @@ class AuthService {
 
   login(idToken) {
     localStorage.setItem('id_token', idToken);
-    window.location.assign('/');
+    // Redirect to the MathGame page after login
+    window.location.assign('/mathgame');
   }
 
   logout() {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useScore } from "../context/scoreContext";  // Import useScore to access score context
+import { useScore } from "./context/ScoreContext";  // Import useScore to access score context
 
 const generateRandomQuestion = (mathType) => {
   const num1 = Math.floor(Math.random() * 10) + 1;
@@ -8,14 +8,13 @@ const generateRandomQuestion = (mathType) => {
 };
 
 const MathGame = () => {
-  const { updateScore, updateLeaderboard } = useScore();  // Access updateScore and updateLeaderboard from context
+  const { score, setScore, leaderboard, updateLeaderboard } = useScore();  // Access updateScore and updateLeaderboard from context
 
   const [mathType, setMathType] = useState("");
   const [timeLimit, setTimeLimit] = useState(30);
   const [isGameActive, setIsGameActive] = useState(false);
   const [questionData, setQuestionData] = useState(null);
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
-  const [score, setScore] = useState(0);
 
   const startGame = () => {
     if (mathType && timeLimit) {

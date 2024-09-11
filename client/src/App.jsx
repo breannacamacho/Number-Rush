@@ -1,4 +1,4 @@
-import './App.css';
+import { Outlet } from 'react-router-dom';
 import {
   ApolloClient,
   InMemoryCache,
@@ -6,13 +6,11 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Outlet } from 'react-router-dom';
+import { ScoreProvider } from './components/context/ScoreContext';
 
-import Header from './components/Header';
-import Footer from './components/Footer';
 
 const httpLink = createHttpLink({
-  uri: '/graphql', 
+  uri: '/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -33,13 +31,16 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div className="flex-column justify-flex-start min-100-vh">
-        <Header />
-        <div className="container">
-          <Outlet />
-        </div>
-        <Footer />
-      </div>
+      <ScoreProvider>
+    <div className="App">
+      <header>
+        <h1>Welcome to NUMBER-RUSH</h1>
+        {/* You can include your header/navigation here */}
+      </header>
+      {/* Outlet renders the matched child route */}
+      <Outlet />
+    </div>
+    </ScoreProvider>
     </ApolloProvider>
   );
 }

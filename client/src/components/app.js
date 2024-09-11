@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScoreProvider } from '../context/ScoreContext';
-import MathGame from './mathGame';
+import MathGame from './MathGame';
 import Scoreboard from './Scoreboard';
 import Leaderboard from './Leaderboard';
 
