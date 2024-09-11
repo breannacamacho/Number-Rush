@@ -3,15 +3,42 @@ const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
-// const cors = require('cors');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
+const multer = require('multer'); // Added multer for file uploads
+const User = require('./models/User'); // Make sure you have your User model
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+});
+
+// Configure multer to store files in the "uploads" folder
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/'); // Specify where to store uploaded files
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname); // Generate a unique filename
+  },
+});
+
+const upload = multer({ storage: storage }); // Create multer instance for file uploads
+
+// File upload route for profile photo
+app.post('/api/user/uploadPhoto', upload.single('profilePhoto'), async (req, res) => {
+  const userId = req.body.userId;
+  const profilePhotoPath = req.file.path; // Get the file path of the uploaded photo
+
+  try {
+    // Update the user's profile photo in the database
+    await User.findByIdAndUpdate(userId, { profilePhoto: profilePhotoPath });
+    res.status(200).json({ message: 'Profile photo uploaded successfully!' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to upload profile photo.' });
+  }
 });
 
 // Create a new instance of an Apollo server with the GraphQL schema
@@ -22,7 +49,6 @@ const startApolloServer = async () => {
   app.use(express.json());
 
   app.use('/graphql', 
-    // cors({ origin: ['http://localhost:3000'] }),  // Ensure correct CORS origin for your frontend
     expressMiddleware(server, {
       context: authMiddleware,  // Attach auth middleware to context
     })

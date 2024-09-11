@@ -8,11 +8,8 @@ import Login from "./pages/Login/Login.jsx";
 import Signup from "./pages/Signup/Signup.jsx";
 import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
 import MathGame from "./components/MathGame.jsx";
+import Profile from "./pages/Profile.jsx"
 
-// const client = new ApolloClient({
-//   uri: "https://your-graphql-endpoint.com/graphql",
-//   cache: new InMemoryCache(),
-// });
 
 const router = createBrowserRouter([
   {
@@ -36,12 +33,14 @@ const router = createBrowserRouter([
         path: "/mathgame",
         element: <MathGame />,
       },
+      {
+        path: "/me",
+        element: <Profile />,
+      },
     ]
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  // <ApolloProvider client={client}> {/* Wrap the app with ApolloProvider */}
     <RouterProvider router={router} />
-  // </ApolloProvider>
 );

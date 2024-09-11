@@ -45,6 +45,8 @@ const generateRandomQuestion = (mathType) => {
   allAnswers = Array.from(allAnswers);
   allAnswers.push(correctAnswer);
   allAnswers = Array.from(new Set(allAnswers));
+  
+  // Ensure 4 unique answers
   if (allAnswers.length < 4) {
     while (allAnswers.length < 4) {
       let randomAnswer;
@@ -69,7 +71,7 @@ const generateRandomQuestion = (mathType) => {
 };
 
 const MathGame = () => {
-  const { score, setScore, leaderboard, updateLeaderboard } = useScore();
+  const { score, setScore, updateLeaderboard } = useScore();
 
   const [mathType, setMathType] = useState("");
   const [timeLimit, setTimeLimit] = useState(30);
@@ -92,8 +94,11 @@ const MathGame = () => {
 
   useEffect(() => {
     if (isGameActive && timeRemaining > 0) {
-      const timer = setTimeout(() => setTimeRemaining(timeRemaining - 1), 1000);
-      return () => clearTimeout(timer);
+      const timer = setTimeout(() => {
+        setTimeRemaining((prevTime) => prevTime - 1); // Use functional state update
+      }, 1000);
+
+      return () => clearTimeout(timer); // Cleanup the timer
     } else if (timeRemaining === 0) {
       setIsGameActive(false);
       updateLeaderboard({ playerName: "Player 1", score });
@@ -102,10 +107,10 @@ const MathGame = () => {
 
   const handleAnswer = (selectedAnswer) => {
     if (Math.abs(selectedAnswer - questionData.correctAnswer) < 0.01) {
-      setScore(score + 1);
-      setCorrectAnswers(correctAnswers + 1);
+      setScore((prevScore) => prevScore + 1); // Functional update for score
+      setCorrectAnswers((prevCorrect) => prevCorrect + 1);
     }
-    setTotalQuestions(totalQuestions + 1);
+    setTotalQuestions((prevTotal) => prevTotal + 1);
     setQuestionData(generateRandomQuestion(mathType));
   };
 

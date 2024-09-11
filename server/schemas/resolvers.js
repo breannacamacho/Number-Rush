@@ -28,15 +28,25 @@ const resolvers = {
       return Quiz.findById(_id).populate('questions');
     },
 
-    // Get logged-in user's details
+    // Get logged-in user's details with populated scores
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findById(context.user._id).populate('scores');
+        return User.findById(context.user._id)
+          .populate('scores') // Populate the scores with Quiz details
+          .select('-password'); // Exclude the password field
       }
       throw new AuthenticationError('You must be logged in!');
     },
+
+    // Get top 10 scores for a user grouped by operation and time limit
+    topScores: async (parent, { userId }) => {
+      const topScores = await Quiz.find({ userId })
+        .sort({ score: -1 }) // Sort by score in descending order
+        .limit(10);
+      return topScores;
+    }
   },
-  
+
   Mutation: {
     // Add a new user and sign a token
     addUser: async (parent, args) => {
@@ -47,31 +57,41 @@ const resolvers = {
 
     // User login
     login: async (parent, { email, password }) => {
-      console.log(email, password);
       const user = await User.findOne({ email });
-      console.log(user);
       if (!user) {
         throw new AuthenticationError('User not found');
       }
 
       const correctPw = await user.isCorrectPassword(password);
-      console.log(correctPw);
       if (!correctPw) {
         throw new AuthenticationError('Incorrect credentials');
       }
 
       const token = signToken(user);
-      console.log(token);
       return { token, user };
     },
 
     // Add a new quiz
-    addQuiz: async (parent, { title, questionIds }) => {
-      const quiz = await Quiz.create({
-        title,
-        questions: questionIds
-      });
-      return quiz;
+    addQuiz: async (parent, { userId, operation, timeLimit, score }) => {
+      try {
+        const newQuiz = await Quiz.create({
+          userId,
+          operation,
+          timeLimit,
+          score
+        });
+
+        await User.findByIdAndUpdate(
+          userId,
+          { $push: { scores: newQuiz._id } }, // Push the new quiz ID into the user's `scores` field
+          { new: true }
+        );
+
+        return newQuiz; // Return the newly created quiz document
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to save quiz');
+      }
     },
 
     // Add a new question
@@ -88,8 +108,19 @@ const resolvers = {
         { new: true }
       );
       return user;
+    },
+
+    // Add a score for a quiz (mutation)
+    addScore: async (parent, { userId, operation, timeLimit, score }) => {
+      const quiz = await Quiz.create({
+        userId,
+        operation,
+        timeLimit,
+        score
+      });
+      return quiz;
     }
-  },
+  }
 };
 
 module.exports = resolvers;
