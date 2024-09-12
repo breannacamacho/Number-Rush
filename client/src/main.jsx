@@ -7,7 +7,7 @@ import LandingPage from "./components/LandingPage.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Signup from "./pages/Signup/Signup.jsx";
 import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
-import MathGame from "./components/MathGame.jsx";
+import MathGame from "./components/mathGame.jsx";
 import Profile from "./pages/Profile.jsx"
 
 
