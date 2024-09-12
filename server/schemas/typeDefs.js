@@ -5,7 +5,6 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
-    score: Int
     scores: [Score]  # If you have multiple scores associated with a user
   }
 
@@ -26,6 +25,10 @@ const typeDefs = gql`
 
   type Quiz {
     _id: ID
+    userId: ID
+    operation: String
+    timeLimit: String
+  date: String
     questions: [Question]  # A quiz has multiple questions
     title: String
   }
@@ -36,6 +39,12 @@ const typeDefs = gql`
     user: User
     score: Int
     createdAt: String
+  }
+
+  input ScoreInput {
+    quiz: String
+    user: String
+    score: Int
   }
 
   type Query {
@@ -53,8 +62,8 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     addQuiz(title: String!, questionIds: [ID!]!): Quiz  # Create a new quiz with a list of question IDs
     addQuestion(question: String!, answerA: String!, answerB: String!, answerC: String!, answerD: String!, correctAnswer: String!): Question  # Add a new question
-    updateScore(userId: ID!, score: Int!): User  # Update a user's score
-    addScore(userId: ID!, operation: String!, score: Int): User
+    saveScore(scoreData: ScoreInput!): User
+    removeScore(_id: ID!): User
   }
 `;
 

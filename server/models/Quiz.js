@@ -15,14 +15,14 @@ const quizSchema = new Schema({
     type: String,
     enum: ['30s', '1m', '5m'], 
   },
-  score: {
-    type: Number,
-    required: true
-  },
   date: {
     type: Date,
     default: Date.now
-  }
+  },
+  questions: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Question'
+  }]
 });
 
 const Quiz = model('Quiz', quizSchema);

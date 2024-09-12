@@ -1,4 +1,4 @@
-const { User, Quiz, Question } = require('../models');
+const { User, Quiz, Question, Score } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
@@ -39,8 +39,8 @@ const resolvers = {
     },
 
     // Get top 10 scores for a user grouped by operation and time limit
-    topScores: async (parent, { userId }) => {
-      const topScores = await Quiz.find({ userId })
+    topScores: async () => {
+      const topScores = await Score.find()
         .sort({ score: -1 }) // Sort by score in descending order
         .limit(10);
       return topScores;
@@ -99,27 +99,79 @@ const resolvers = {
       const question = await Question.create(args);
       return question;
     },
+    saveScore: async (parent, { scoreData }, context) => {
+      // Check if user is authenticated
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+      console.log(scoreData)
+      const { quiz, score } = scoreData;
 
-    // Update user score
-    updateScore: async (parent, { userId, score }) => {
-      const user = await User.findByIdAndUpdate(
-        userId,
-        { $set: { score } },
-        { new: true }
-      );
-      return user;
+      try {
+        // Find the quiz by its ID
+        const quizRecord = await Quiz.findById(quiz);
+        if (!quizRecord) {
+          throw new Error('Quiz not found');
+        }
+
+        // Create a new score record
+        const newScore = await Score.create({
+          quiz: quizRecord._id,
+          user: context.user._id, // Use the userId from context
+          score,
+          createdAt: new Date().toISOString(),
+        });
+
+        console.log(newScore)
+        const userId = context.user._id;
+        // Add the score to the user's scores array
+
+        // 
+        const updatedUser = await User.findByIdAndUpdate(
+          userId,
+          { $push: { scores: newScore._id } },
+          { new: true, runValidators: true }
+        );
+        console.log(updatedUser)
+        return {newScore, updatedUser}; // Populate the scores field and return updated user
+      } catch (err) {
+        throw new Error(`Failed to save score: ${err.message}`);
+      }
     },
 
-    // Add a score for a quiz (mutation)
-    addScore: async (parent, { userId, operation, score }) => {
-      const quiz = await Quiz.create({
-        userId,
-        operation,
+    removeScore: async (parent, { _id }, context) => {
+      // Check if user is authenticated
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
 
-        score
-      });
-      return quiz;
-    }
+      try {
+        // Find the score by its ID
+        const scoreRecord = await Score.findById(_id);
+        if (!scoreRecord) {
+          throw new Error('Score not found');
+        }
+
+        // Check if the score belongs to the logged-in user
+        if (scoreRecord.user.toString() !== context.user._id.toString()) {
+          throw new AuthenticationError('You are not authorized to remove this score');
+        }
+
+        // Remove the score
+        await Score.findByIdAndDelete(_id);
+
+        // Remove the score reference from the user's scores array
+        await User.findByIdAndUpdate(
+          context.user._id,
+          { $pull: { scores: _id } },
+          { new: true }
+        );
+
+        return await User.findById(context.user._id).populate('scores'); // Return updated user data
+      } catch (err) {
+        throw new Error(`Failed to remove score: ${err.message}`);
+      }
+    },
   }
 };
 

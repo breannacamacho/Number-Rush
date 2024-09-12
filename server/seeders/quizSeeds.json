@@ -1,0 +1,18 @@
+[
+    {
+      "operation": "addition",
+      "timeLimit": "1m"},
+    {
+      "operation": "subtraction",
+      "timeLimit": "5m"},
+    {
+      "operation": "multiplication",
+      "timeLimit": "30s"},
+    {
+      "operation": "division",
+      "timeLimit": "1m"},
+    {
+      "operation": "addition",
+      "timeLimit": "5m" }
+  ]
+  
