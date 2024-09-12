@@ -115,6 +115,7 @@ const resolvers = {
       const quiz = await Quiz.create({
         userId,
         operation,
+
         score
       });
       return quiz;
