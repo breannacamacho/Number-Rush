@@ -111,11 +111,10 @@ const resolvers = {
     },
 
     // Add a score for a quiz (mutation)
-    addScore: async (parent, { userId, operation, timeLimit, score }) => {
+    addScore: async (parent, { userId, operation, score }) => {
       const quiz = await Quiz.create({
         userId,
         operation,
-        timeLimit,
         score
       });
       return quiz;
