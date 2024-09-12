@@ -32,8 +32,9 @@ const typeDefs = gql`
 
   type Score {
     _id: ID
+    quiz: Quiz
+    user: User
     score: Int
-    operation: String
     createdAt: String
   }
 
@@ -44,6 +45,7 @@ const typeDefs = gql`
     quizzes: [Quiz]  # Get all quizzes
     quiz(_id: ID!): Quiz  # Get a single quiz by ID
     me: User  # This is the new query for fetching logged-in user details
+    topScores: Score
   }
 
   type Mutation {
@@ -52,6 +54,7 @@ const typeDefs = gql`
     addQuiz(title: String!, questionIds: [ID!]!): Quiz  # Create a new quiz with a list of question IDs
     addQuestion(question: String!, answerA: String!, answerB: String!, answerC: String!, answerD: String!, correctAnswer: String!): Question  # Add a new question
     updateScore(userId: ID!, score: Int!): User  # Update a user's score
+    addScore(userId: ID!, operation: String!, score: Int): User
   }
 `;
 

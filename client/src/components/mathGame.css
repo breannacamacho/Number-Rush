@@ -1,0 +1,81 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #00BFFF, #FF8C00); /* Cool gradient background */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  overflow: hidden; /* Prevent overflow */
+}
+
+h2 {
+  font-size: 32px;
+  color: #FF8C00; /* Bright orange */
+  margin-bottom: 15px;
+  text-align: center; /* Center-align text */
+  letter-spacing: 1px; /* Slight letter spacing */
+}
+
+p {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 25px;
+  text-align: center; /* Center-align paragraphs */
+}
+
+.select-options h3 {
+  font-size: 22px;
+  color: #00BFFF; /* Electric blue */
+  margin-bottom: 15px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+button {
+  background: linear-gradient(45deg, #FFD700, #FF8C00); /* Gradient button */
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 15px 35px;
+  border-radius: 0; /* Non-rounded borders */
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  margin: 10px;
+  width: 100%;
+  max-width: 250px;
+  text-transform: uppercase; /* Button text in uppercase */
+}
+
+button:hover {
+  transform: scale(1.08); /* Button enlarges more on hover */
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); /* Stronger shadow effect */
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.5); /* Focus ring effect */
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+      flex-direction: column; /* Adjusts layout for small screens */
+      padding: 15px;
+  }
+
+  button {
+      padding: 12px 25px;
+      max-width: 200px; /* Adjust button size for mobile */
+  }
+}
