@@ -21,7 +21,7 @@ const userSchema = new Schema({
   scores: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Quiz', // Reference to Quiz model for multiple quiz attempts
+      ref: 'Score', // Reference to Quiz model for multiple quiz attempts
     },
   ],
   profilePhoto: {

@@ -68,7 +68,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: url('/image1.PNG');
   background-size: cover;
-  color: #1a1a1a;
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;

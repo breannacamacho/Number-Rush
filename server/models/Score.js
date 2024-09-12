@@ -15,6 +15,6 @@ const scoreSchema = new Schema({
   },
 });
 
-const Quiz = model('Quiz', quizSchema);
+const Score = model('Score', scoreSchema);
 
-module.exports = Quiz;
+module.exports = Score;
