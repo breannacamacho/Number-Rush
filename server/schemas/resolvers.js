@@ -139,7 +139,6 @@ const resolvers = {
       }
     },
 
-
     removeScore: async (parent, { _id }, context) => {
       // Check if user is authenticated
       if (!context.user) {
